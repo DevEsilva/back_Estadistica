@@ -5,6 +5,7 @@ import com.crud.dto.Mensaje;
 import com.crud.entity.Cargos;
 import com.crud.entity.Establecimientos;
 import com.crud.entity.Sexo;
+import com.crud.entity.Tableros;
 import com.crud.repository.CargosRepository;
 import com.crud.repository.SexoRepository;
 import com.crud.security.entity.Rol;
@@ -13,6 +14,7 @@ import com.crud.security.repository.AvatarRepository;
 import com.crud.security.service.UsuarioService;
 import com.crud.service.CatalogosService;
 import com.crud.service.EstablecimientosServices;
+import com.crud.service.TableroService;
 import com.crud.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +58,9 @@ public class CatalogosController {
 
     @Autowired
     private EstablecimientosServices establecimientosServices;
+
+    @Autowired
+    private TableroService tableroService;
 
     @GetMapping("/listaEstablecimientos")
     public ResponseEntity<List<Establecimientos>> list() {
@@ -156,6 +162,30 @@ public class CatalogosController {
 
             }
             return new ResponseEntity(usersList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping("/listaTableros")
+    public ResponseEntity<List<Tableros>> listaTableros() {
+        try {
+            List<Tableros> list = tableroService.Listado();
+
+            return new ResponseEntity(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+    
+     @GetMapping("/tablero/{nombre}")
+    public ResponseEntity<Tableros> Tablero(@PathVariable String nombre) {
+        try {
+            Tableros tablero = tableroService.tablero(nombre);
+
+            return new ResponseEntity(tablero, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -30,7 +30,7 @@ public class HistoryChanges implements Serializable {
     private int IdTable;
 
     @Column(name = "user_h", nullable = false)
-    private String Usuario;
+    private String usuario;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_create", nullable = false)
@@ -45,11 +45,11 @@ public class HistoryChanges implements Serializable {
     public HistoryChanges() {
     }
 
-    public HistoryChanges(int Id, String Table, int IdTable, String Usuario, Date FechaCreacion, String Descripcion, int Activo) {
+    public HistoryChanges(int Id, String Table, int IdTable, String usuario, Date FechaCreacion, String Descripcion, int Activo) {
         this.Id = Id;
         this.Table = Table;
         this.IdTable = IdTable;
-        this.Usuario = Usuario;
+        this.usuario = usuario;
         this.FechaCreacion = FechaCreacion;
         this.Descripcion = Descripcion;
         this.Activo = Activo;
@@ -80,11 +80,11 @@ public class HistoryChanges implements Serializable {
     }
 
     public String getUsuario() {
-        return Usuario;
+        return usuario;
     }
 
-    public void setUsuario(String Usuario) {
-        this.Usuario = Usuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public Date getFechaCreacion() {

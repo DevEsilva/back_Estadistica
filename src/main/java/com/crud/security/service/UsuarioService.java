@@ -1,5 +1,6 @@
 package com.crud.security.service;
 
+import com.crud.entity.HistoryChanges;
 import com.crud.security.entity.Usuario;
 import com.crud.security.repository.UsuarioRepository;
 import java.util.List;
@@ -40,4 +41,6 @@ public class UsuarioService {
     public List<Usuario> lista() {
         return usuarioRepository.findAll();
     }
+    
+
 }

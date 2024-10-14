@@ -18,6 +18,65 @@ public class Utils {
     @Autowired
     private HistoryChangesService changesService; // Suponiendo que tienes un servicio para guardar los cambios
 
+    public void CreateChanges(String Tabla, String dato1, int idTabla, int tipoCambio) {
+        String descripcion = "";
+        switch (tipoCambio) {
+            case 0:
+                descripcion = constants.SeCreo;
+                break;
+            case 1:
+                descripcion = constants.Intento_Creacion;
+                break;
+            case 2:
+                descripcion = constants.Excepcion_Crear;
+
+        }
+        descripcion = descripcion + " " + Tabla + " " + dato1;
+
+        this.SaveChanges(descripcion, new Date(), idTabla, this.userActivo(), Tabla);
+
+    }
+
+    public void ActualizacionChanges(String Tabla, String dato1, int idTabla, int tipoCambio) {
+
+        String descripcion = "";
+        switch (tipoCambio) {
+            case 0:
+                descripcion = constants.SeActualizo;
+                break;
+            case 1:
+                descripcion = constants.Intento_Actualizacion;
+                break;
+            case 2:
+                descripcion = constants.Excepcion_Actualizar;
+
+        }
+        descripcion = descripcion + " " + Tabla + " " + dato1;
+
+        this.SaveChanges(descripcion, new Date(), idTabla, this.userActivo(), Tabla);
+
+    }
+
+    public void EliminacionChanges(String Tabla, String dato1, int idTabla, int tipoCambio) {
+
+        String descripcion = "";
+        switch (tipoCambio) {
+            case 0:
+                descripcion = constants.SeElimino;
+                break;
+            case 1:
+                descripcion = constants.Intento_Eliminacion;
+                break;
+            case 2:
+                descripcion = constants.Excepcion_Eliminar;
+
+        }
+        descripcion = descripcion + " " + Tabla + " " + dato1;
+
+        this.SaveChanges(descripcion, new Date(), idTabla, this.userActivo(), Tabla);
+
+    }
+
     /**
      * @param descripcion
      * @param fecha
