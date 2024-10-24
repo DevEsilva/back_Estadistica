@@ -3,7 +3,6 @@ package com.crud.controller;
 import com.crud.dto.AvatarDTO;
 import com.crud.entity.Avatar;
 import com.crud.security.service.AvatarService;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

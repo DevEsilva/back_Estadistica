@@ -1,9 +1,11 @@
 package com.crud.controller;
 
 import com.crud.dto.DatosUsuarioDTO;
+import com.crud.dto.ImplicadoDTO;
 import com.crud.dto.Mensaje;
 import com.crud.entity.Cargos;
 import com.crud.entity.Establecimientos;
+import com.crud.entity.Implicado;
 import com.crud.entity.Sexo;
 import com.crud.entity.Tableros;
 import com.crud.repository.CargosRepository;
@@ -16,7 +18,12 @@ import com.crud.service.CatalogosService;
 import com.crud.service.EstablecimientosServices;
 import com.crud.service.TableroService;
 import com.crud.util.Utils;
+import com.crud.util.constants;
+import io.swagger.annotations.ApiOperation;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,6 +33,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -179,8 +188,38 @@ public class CatalogosController {
         }
 
     }
-    
-     @GetMapping("/tablero/{nombre}")
+
+   /* @PostMapping("/editTableros")
+    @ApiOperation("Edición de Tableros")
+    public ResponseEntity<?> edit(@RequestBody Tableros tablerodto) {
+        try {
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat(constants.fecha_hora);
+
+            String date = dateFormat2.format(new Date());
+            Implicado impli = tableroService.getImplicado(implicadoDTO.getNumeroDocumentoIdentidad(), 0);
+            if (impli != null) {
+                impli.setFecha_Actualizacion(dateFormat2.parse(date));
+                impli.setNombre_Completo(implicadoDTO.getNombreCompleto());
+                impli.setTipo_DocIdent(implicadoDTO.getTipoDocumentoIdentidad());
+                impli.setNumDocIdent(implicadoDTO.getNumeroDocumentoIdentidad());
+                impli.setTelefono(implicadoDTO.getTelefono());
+                impli.setObservacion(implicadoDTO.getObservacion());
+                implicadoService.save(impli);
+
+                int implicadoId = impli.getId();
+                util.SaveChanges(constants.SeActualizo + " " + constants.Involucrado + " " + impli.getNumDocIdent(), new Date(), implicadoId, util.userActivo(), constants.implicado);
+                return new ResponseEntity(new Mensaje(constants.SeActualizo + " " + constants.Involucrado, 0, constants.ActualizacionCorrecta + " " + implicadoDTO.getNombreCompleto()), HttpStatus.OK);
+            } else {
+                util.SaveChanges(constants.Intento_Actualizacion + " " + constants.Involucrado, new Date(), 0, util.userActivo(), constants.implicado);
+                return new ResponseEntity(new Mensaje(constants.NoSePuede_Actualizar + " " + constants.Involucrado, 99, constants.No_existe + " " + constants.Involucrado), HttpStatus.BAD_REQUEST);
+            }
+        } catch (ParseException e) {
+            util.SaveChanges(constants.Excepcion_Actualizar + " " + constants.Involucrado + ": " + e.getMessage(), new Date(), 0, util.userActivo(), constants.implicado);
+            return new ResponseEntity(new Mensaje(constants.Involucrado + " " + constants.No_Actualizado, 99, constants.Excepcion + " : " + e.getMessage()), HttpStatus.BAD_GATEWAY);
+        }
+    }*/
+
+    @GetMapping("/tablero/{nombre}")
     public ResponseEntity<Tableros> Tablero(@PathVariable String nombre) {
         try {
             Tableros tablero = tableroService.tablero(nombre);
